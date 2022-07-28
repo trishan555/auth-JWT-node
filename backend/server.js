@@ -1,22 +1,24 @@
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
-
-const app = express()
-require('dotenv').config()
 const userRoutes = require('./routes/user.route')
 
+//express app
+const app = express()
+
 /**
- * *this is used for when we make request from client side
+ * * app.use(express.json()) -> this is used for when we make request from client side
  * *we have to gather those data using req method in controller
  * !req.body -> without following middleware we cant access the object
  * !and cannot access the data which is user sent
  */
 
+//middleware
 app.use(express.json())
 app.use(cookieParser())
 
-//routines
+//routes
 app.get('/', (req, res) => res.send('Hello'))
 app.use(userRoutes)
 

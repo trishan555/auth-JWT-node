@@ -38,14 +38,6 @@ const handleErrors = (err) => {
     return errors
 }
 
-const signup_get = (req, res) => {
-    res.send('signup') //render signup page
-}
-
-const login_get = (req, res) => {
-    res.render('login') //render login page
-}
-
 const signup_post = async (req, res) => {
     const { email, password } = req.body
     const newUser = {
