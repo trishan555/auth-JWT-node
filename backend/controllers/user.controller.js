@@ -15,12 +15,12 @@ const handleErrors = (err) => {
 
     //incorrrect email
     if (err.message === 'Incorrect email') {
-        errors.email = 'Invalid Email !'
+        errors.email = 'That Email is not registered !'
     }
 
     //incorrrect password
     if (err.message === 'Incorrect password') {
-        errors.password = 'Invalid Password !'
+        errors.password = 'That Password is incorrect !'
     }
 
     //duplicate error code
@@ -40,6 +40,10 @@ const handleErrors = (err) => {
 
 const signup_get = (req, res) => {
     res.send('signup') //render signup page
+}
+
+const login_get = (req, res) => {
+    res.render('login') //render login page
 }
 
 const signup_post = async (req, res) => {
@@ -64,10 +68,6 @@ const signup_post = async (req, res) => {
     }
 }
 
-const login_get = (req, res) => {
-    res.render('login') //render login page
-}
-
 const login_post = async (req, res) => {
     const { email, password } = req.body
 
@@ -80,7 +80,7 @@ const login_post = async (req, res) => {
     } catch (err) {
         const errors = handleErrors(err)
         //console.log(err)
-        res.status(400).json({})
+        res.status(400).json({ errors })
     }
 }
 
