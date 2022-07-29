@@ -26,15 +26,30 @@ userSchema.pre('save', async function (next) {
 })
 
 userSchema.statics.login = async function (email, password) {
-    const user = await User.findOne({ email: email })
-    if (user) {
-        const auth = await bcrypt.compare(password, user.password)
-        if (auth) {
-            return user
-        }
+    // const user = await User.findOne({ email: email })
+    // if (user) {
+    //     const auth = await bcrypt.compare(password, user.password)
+    //     if (auth) {
+    //         return user
+    //     }
+    //     throw Error('Incorrect password')
+    // }
+    // throw Error('Incorrect email')
+    if (!email || !password) {
+        throw Error('All fields must be filled')
+    }
+
+    const user = await this.findOne({ email })
+    if (!user) {
+        throw Error('Incorrect email')
+    }
+
+    const match = await bcrypt.compare(password, user.password)
+    if (!match) {
         throw Error('Incorrect password')
     }
-    throw Error('Incorrect email')
+
+    return user
 }
 
 const User = mongoose.model('user', userSchema)

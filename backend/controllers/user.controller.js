@@ -13,6 +13,10 @@ const handleErrors = (err) => {
     console.log(err.message, err.code)
     let errors = { email: '', password: '' }
 
+    if (err.message === 'All fields must be filled') {
+        errors.email = 'All fields must be filled'
+        errors.password = 'All fields must be filled'
+    }
     //incorrrect email
     if (err.message === 'Incorrect email') {
         errors.email = 'That Email is not registered !'
@@ -51,12 +55,11 @@ const signup_post = async (req, res) => {
         const token = createToken(user._id)
         //send token with cookie to the web browser
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 })
-
         res.status(201).json({ user: user._id })
     } catch (err) {
         const errors = handleErrors(err)
         //console.log(err)
-        res.status(400).json({ errors })
+        res.status(400).json([errors])
     }
 }
 
@@ -72,13 +75,11 @@ const login_post = async (req, res) => {
     } catch (err) {
         const errors = handleErrors(err)
         //console.log(err)
-        res.status(400).json({ errors })
+        res.status(400).json([errors])
     }
 }
 
 module.exports = {
-    signup_get,
     signup_post,
     login_post,
-    login_get,
 }
