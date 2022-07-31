@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const userRoutes = require('./routes/user.route')
+const { requireAuth, checkUser } = require('./middlewares/authMiddleware')
 
 //express app
 const app = express()
@@ -21,6 +22,8 @@ app.use(cookieParser())
 app.use(cors())
 
 //routes
+app.get('*', checkUser)
+app.get('/another', requireAuth, (req, res) => res.send('Hello'))
 app.get('/', (req, res) => res.send('Hello'))
 app.use(userRoutes)
 
