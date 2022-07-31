@@ -14,7 +14,7 @@ const Login = () => {
                 email,
                 password,
             })
-            console.log(res)
+            console.log(res.data)
             setUser(res.data)
         } catch (err) {
             if (err.response.data[0].email === '') {
