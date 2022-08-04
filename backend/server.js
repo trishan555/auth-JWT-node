@@ -22,10 +22,10 @@ app.use(cookieParser())
 app.use(cors())
 
 //routes
-app.get('*', checkUser)
-app.get('/another', requireAuth, (req, res) => res.send('Hello'))
-app.get('/', (req, res) => res.send('Hello'))
 app.use(userRoutes)
+app.get('/another', requireAuth, (req, res) => res.send('requireAuth'))
+app.get('*', checkUser)
+//app.get('/', (req, res) => res.send('Hello'))
 
 //mongodb connection
 mongoose
